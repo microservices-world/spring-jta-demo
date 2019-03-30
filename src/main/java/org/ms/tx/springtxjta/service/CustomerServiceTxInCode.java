@@ -1,6 +1,7 @@
 package org.ms.tx.springtxjta.service;
 
 import java.util.List;
+import lombok.extern.slf4j.Slf4j;
 import org.ms.tx.springtxjta.dao.CustomerRepository;
 import org.ms.tx.springtxjta.domain.Customer;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,7 @@ import org.springframework.transaction.support.DefaultTransactionDefinition;
  * @create: 2019-03-30 15:45
  **/
 @Service
+@Slf4j
 public class CustomerServiceTxInCode {
 
     @Autowired
@@ -39,6 +41,7 @@ public class CustomerServiceTxInCode {
             if (!ts.isCompleted()) {
                 platformTransactionManager.rollback(ts);
             }
+            log.error("save customer error", ex);
             throw ex;
         }
     }
